@@ -5405,14 +5405,14 @@ chests[62] = {
         }
         if (canEnterLightWorld('inverted', false, false)) {
             //TODO: bunny ?
-            if (pendantCount === 3) {
+            if (pendantCount === 3 && trackerData.items.moonpearl) {
                 availability.inverted = "available";
             }
             else if (trackerData.items.book) {
                 availability.inverted = "possible";
             }
         }
-        else if (pendantCount === 3 || trackerData.items.book) {
+        else if ((pendantCount === 3 && trackerData.items.moonpearl) || trackerData.items.book) {
             if (canEnterLightWorld('inverted', true, false)) {
                 availability.inverted = "agahnim";
             }
