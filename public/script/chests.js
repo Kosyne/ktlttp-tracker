@@ -986,9 +986,8 @@ dungeons[4] = {
                     && canEnterSouthDarkWorld(logic, agahnimCheck, allowOutOfLogicGlitches));
         }
         else if (logic === 'inverted') {
-            // TODO super bunny lever pull?
-            return trackerData.items.mirror && trackerData.items.flippers && canEnterLightWorld('inverted', agahnimCheck, allowOutOfLogicGlitches)
-                    && (trackerData.items.moonpearl || (allowOutOfLogicGlitches && trackerData.items.mirror));
+            return trackerData.items.mirror && trackerData.items.flippers
+                    && canEnterLightWorld('inverted', agahnimCheck, allowOutOfLogicGlitches) && trackerData.items.moonpearl;
         }
     },
     isBeatable: function () {
@@ -2885,20 +2884,16 @@ chests[1] = {
     isAvailable: function () {
         const availability = new Availability();
         availability.glitchless = "available";
-        // TODO: super bunny lever pull?
-        if (canEnterLightWorld('inverted', false, false)) {
-            if (trackerData.items.moonpearl) {
+        if (trackerData.items.moonpearl) {
+            if (canEnterLightWorld('inverted', false, false)) {
                 availability.inverted = "available";
             }
-            else if (trackerData.items.mirror) {
-                availability.inverted = "glitchavailable";
+            else if (canEnterLightWorld('inverted', true, false)) {
+                availability.inverted = "agahnim";
             }
-        }
-        else if (canEnterLightWorld('inverted', true, false) && trackerData.items.moonpearl) {
-            availability.inverted = "agahnim";
-        }
-        else if (canEnterLightWorld('inverted', true, true) && (trackerData.items.moonpearl || trackerData.items.mirror)) {
-            availability.inverted = "glitchagahnim";
+            else if (canEnterLightWorld('inverted', true, true)) {
+                availability.inverted = "glitchagahnim";
+            }
         }
         return availability;
     }
@@ -3009,19 +3004,16 @@ chests[5] = {
     isAvailable: function () {
         const availability = new Availability();
         availability.glitchless = "available";
-        if (canEnterLightWorld('inverted', false, false)) {
-            if (trackerData.items.moonpearl) {
+        if (trackerData.items.moonpearl) {
+            if (canEnterLightWorld('inverted', false, false)) {
                 availability.inverted = "available";
             }
-            else if (trackerData.items.mirror) {
-                availability.inverted = "glitchavailable";
+            else if (canEnterLightWorld('inverted', true, false)) {
+                availability.inverted = "agahnim";
             }
-        }
-        else if (canEnterLightWorld('inverted', true, false) && trackerData.items.moonpearl) {
-            availability.inverted = "agahnim";
-        }
-        else if (canEnterLightWorld('inverted', true, true) && (trackerData.items.moonpearl || trackerData.items.mirror)) {
-            availability.inverted = "glitchagahnim";
+            else if (canEnterLightWorld('inverted', true, true)) {
+                availability.inverted = "glitchagahnim";
+            }
         }
         return availability;
     }
@@ -3251,19 +3243,16 @@ chests[12] = {
     isAvailable: function () {
         const availability = new Availability();
         availability.glitchless = "available";
-        if (canEnterLightWorld('inverted', false, false)) {
-            if (trackerData.items.moonpearl) {
+        if (trackerData.items.moonpearl) {
+            if (canEnterLightWorld('inverted', false, false)) {
                 availability.inverted = "available";
             }
-            else if (trackerData.items.mirror && trackerData.items.boots) {
-                availability.inverted = "glitchavailable";
+            else if (canEnterLightWorld('inverted', true, false)) {
+                availability.inverted = "agahnim";
             }
-        }
-        else if (canEnterLightWorld('inverted', true, false) && trackerData.items.moonpearl) {
-            availability.inverted = "agahnim";
-        }
-        else if (canEnterLightWorld('inverted', true, true) && (trackerData.items.moonpearl || (trackerData.items.mirror && trackerData.items.boots))) {
-            availability.inverted = "glitchagahnim";
+            else if (canEnterLightWorld('inverted', true, true)) {
+                availability.inverted = "glitchagahnim";
+            }
         }
         return availability;
     }
@@ -3368,19 +3357,16 @@ chests[15] = {
     isAvailable: function () {
         const availability = new Availability();
         availability.glitchless = "available";
-        if (canEnterLightWorld('inverted', false, false)) {
-            if (trackerData.items.moonpearl) {
+        if (trackerData.items.moonpearl) {
+            if (canEnterLightWorld('inverted', false, false)) {
                 availability.inverted = "available";
             }
-            else if (trackerData.items.mirror) {
-                availability.inverted = "glitchpossible";
+            else if (canEnterLightWorld('inverted', true, false)) {
+                availability.inverted = "agahnim";
             }
-        }
-        else if (canEnterLightWorld('inverted', true, false) && trackerData.items.moonpearl) {
-            availability.inverted = "agahnim";
-        }
-        else if (canEnterLightWorld('inverted', true, true) && (trackerData.items.moonpearl || trackerData.items.mirror)) {
-            availability.inverted = "glitchagahnim";
+            else if (canEnterLightWorld('inverted', true, true)) {
+                availability.inverted = "glitchagahnim";
+            }
         }
         return availability;
     }
@@ -4218,16 +4204,19 @@ chests[36] = {
     isAvailable: function () {
         const availability = new Availability();
         availability.glitchless = 'available';
-        if (trackerData.items.moonpearl) {
-            if (canEnterLightWorld('inverted', false, false)) {
+        if (canEnterLightWorld('inverted', false, false)) {
+            if (trackerData.items.moonpearl) {
                 availability.inverted = "available";
             }
-            else if (canEnterLightWorld('inverted', true, false)) {
-                availability.inverted = "agahnim";
+            else {
+                availability.inverted = "possible";
             }
-            else if (canEnterLightWorld('inverted', true, true)) {
-                availability.inverted = "glitchagahnim";
-            }
+        }
+        else if (canEnterLightWorld('inverted', true, false)) {
+            availability.inverted = "agahnim";
+        }
+        else if (canEnterLightWorld('inverted', true, true)) {
+            availability.inverted = "glitchagahnim";
         }
         return availability;
     }
@@ -4547,22 +4536,21 @@ chests[43] = {
         else {
             availability.glitchless = 'possible';
         }
-        if (canEnterLightWorld('inverted', false, false)) {
-            availability.inverted = 'possible';
-            if (trackerData.items.boots) {
-                if (trackerData.items.moonpearl) {
+        if (trackerData.items.moonpearl) {
+            if (canEnterLightWorld('inverted', false, false)) {
+                if (trackerData.items.boots) {
                     availability.inverted = "available";
                 }
-                else if (trackerData.items.mirror) {
-                    availability.inverted = "glitchavailable";
+                else {
+                    availability.inverted = 'possible';
                 }
             }
-        }
-        else if (canEnterLightWorld('inverted', true, false)) {
-            availability.inverted = "agahnim";
-        }
-        else if (canEnterLightWorld('inverted', true, true)) {
-            availability.inverted = "glitchagahnim";
+            else if (canEnterLightWorld('inverted', true, false)) {
+                availability.inverted = "agahnim";
+            }
+            else if (canEnterLightWorld('inverted', true, true)) {
+                availability.inverted = "glitchagahnim";
+            }
         }
         return availability;
     }
@@ -5154,22 +5142,16 @@ chests[56] = {
     isAvailable: function () {
         const availability = new Availability();
         availability.glitchless = 'available';
-        if (canEnterLightWorld('inverted', false, false)) {
-            if (trackerData.items.moonpearl) {
+        if (trackerData.items.moonpearl) {
+            if (canEnterLightWorld('inverted', false, false)) {
                 availability.inverted = "available";
             }
-            else if (trackerData.items.mirror) {
-                availability.inverted = "glitchavailable";
+            else if (canEnterLightWorld('inverted', true, false)) {
+                availability.inverted = "agahnim";
             }
-            else {
-                availability.inverted = "possible";
+            else if (canEnterLightWorld('inverted', true, true)) {
+                availability.inverted = "glitchagahnim";
             }
-        }
-        else if (canEnterLightWorld('inverted', true, false) && trackerData.items.moonpearl) {
-            availability.inverted = "agahnim";
-        }
-        else if (canEnterLightWorld('inverted', true, true)) {
-            availability.inverted = "glitchagahnim";
         }
         return availability;
     }
@@ -5209,19 +5191,16 @@ chests[58] = {
     isAvailable: function () {
         const availability = new Availability();
         availability.glitchless = 'available';
-        if (canEnterLightWorld('inverted', false, false)) {
-            if (trackerData.items.moonpearl) {
+        if (trackerData.items.moonpearl) {
+            if (canEnterLightWorld('inverted', false, false)) {
                 availability.inverted = "available";
             }
-            else if (trackerData.items.mirror) {
-                availability.inverted = "glitchavailable";
+            else if (canEnterLightWorld('inverted', true, false)) {
+                availability.inverted = "agahnim";
             }
-        }
-        else if (canEnterLightWorld('inverted', true, false) && trackerData.items.moonpearl) {
-            availability.inverted = "agahnim";
-        }
-        else if (canEnterLightWorld('inverted', true, true) && (trackerData.items.moonpearl || trackerData.items.mirror)) {
-            availability.inverted = "glitchagahnim";
+            else if (canEnterLightWorld('inverted', true, true)) {
+                availability.inverted = "glitchagahnim";
+            }
         }
         return availability;
     }
