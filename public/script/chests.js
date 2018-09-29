@@ -4577,7 +4577,12 @@ chests[44] = {
         const availability = new Availability();
         availability.glitchless = 'available';
         if (canEnterLightWorld('inverted', false, false)) {
-            availability.inverted = "available";
+            if (trackerData.items.moonpearl) {
+                availability.inverted = "available";
+            }
+            else {
+                availability.inverted = "possible";
+            }
         }
         else if (canEnterLightWorld('inverted', true, false)) {
             availability.inverted = "agahnim";
