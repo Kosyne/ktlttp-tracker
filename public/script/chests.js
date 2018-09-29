@@ -4929,7 +4929,6 @@ chests[50] = {
             }
         }
         availability.inverted = 'possible';
-        //TODO: confirm
         if (trackerData.items.moonpearl && canLiftRocks() && trackerData.items.cape && trackerData.items.mirror) {
             if (canEnterLightWorld('inverted', false, false)) {
                 availability.inverted = "available";
