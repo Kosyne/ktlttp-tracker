@@ -66,7 +66,6 @@ function canMeltThings() {
 }
 
 function canFly(logic = 'glitchless') {
-    //TODO: bunny flute activation ?
     return trackerData.items.flute && (logic !== 'inverted' || (canEnterLightWorld(logic, false, false) && trackerData.items.moonpearl));
 }
 
