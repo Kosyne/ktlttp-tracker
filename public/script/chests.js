@@ -4809,10 +4809,15 @@ chests[48] = {
         if (canEnterLightWorld('inverted', false, false)) {
             availability.inverted = 'possible';
             if (dungeons[1].canEnter('inverted', false, false)) {
-                availability.inverted = "available";
+                if (trackerData.items.moonpearl) {
+                    availability.inverted = "available";
+                }
+                else {
+                    availability.inverted = "glitchavailable";
+                }
             }
         }
-        else if (canEnterLightWorld('inverted', true, false)) {
+        else if (canEnterLightWorld('inverted', true, false) && trackerData.items.moonpearl) {
             availability.inverted = "agahnim";
         }
         else if (canEnterLightWorld('inverted', true, true)) {
