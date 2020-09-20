@@ -76,7 +76,8 @@ function autotrackCleanup() {
         autotrackSocket.close();
         autotrackSocket = null;
     }
-    
+
+    autotrackPrevData = null;
     autotrackSetStatus("Disonnected");
     document.getElementById("autoTrackButton").textContent="Connect";
     autotrackState = "disconnected";
@@ -168,11 +169,11 @@ function autotrackDoTracking(data) {
 
     function updatechest(chest, offset, mask) {
         if (newbit(offset, mask))
-            trackerData.chestsopened[chest] = true;
+            rootRef.child('chestsopened').child(chest).set(true);
     };
     function updatechest_group(chest, locations) {
         if (newbit_group(locations))
-            trackerData.chestsopened[chest] = true;
+            rootRef.child('chestsopened').child(chest).set(true);
     };
     
     updatechest(0, 0x226, 0x10); // King's Tomb
@@ -242,43 +243,43 @@ function autotrackDoTracking(data) {
 
 
     //if (newbit_group([[0x150, 0x10], [0x152, 0x10], [0x172, 0x10], [0x170, 0x10], [0x154, 0x10], [0x191, 0x08]])) { // Eastern Palace - Compass + Big Chest + Cannonball + Big Key Chest + Map + Boss
-    //    trackerData.dungeonchests[0] = 0;
-    //    trackerData.items["chest0"] = 0;
+    //    rootRef.child('dungeonchests').child(0).set(0);
+    //    rootRef.child('items').child("chest0").set(0);
     //}
 
     if (newbit(0x191, 0x08)) { // Eastern Palace Boss
-        trackerData.dungeonbeaten[0] = true;
-        trackerData.items["boss0"] = 2;
+        rootRef.child('dungeonbeaten').child(0).set(true);
+        rootRef.child('items').child("boss0").set(2);
     }
 
 
     //if (newbit_group([[0x0E6, 0x10], [0x0E7, 0x04], [0x0E8, 0x10], [0x10A, 0x10], [0x0EA, 0x10], [0x067, 0x08]])) { // Desert Palace - Big Chest + Torch + Map Chest + Compass Chest + Big Key Chest + Boss
-    //    trackerData.dungeonchests[1] = 0;
-    //    trackerData.items["chest1"] = 0;
+    //    rootRef.child('dungeonchests').child(1).set(0);
+    //    rootRef.child('items').child("chest1").set(0);
     //}
 
     if (newbit(0x067, 0x08)) { // Desert Palace Boss
-        trackerData.dungeonbeaten[1] = true;
-        trackerData.items["boss1"] = 2;
+        rootRef.child('dungeonbeaten').child(1).set(true);
+        rootRef.child('items').child("boss1").set(2);
     }
 
 
     //if (newbit_group([[0x10F, 0x04], [0x0EE, 0x10], [0x10E, 0x10], [0x04E, 0x20], [0x04E, 0x10], [0x00F, 0x08]])) { // Hera - Cage + Map Chest + Big Key Chest + Compass Chest + Big Chest + Boss
-    //    trackerData.dungeonchests[2] = 0;
-    //    trackerData.items["chest2"] = 0;
+    //    rootRef.child('dungeonchests').child(2).set(0);
+    //    rootRef.child('items').child("chest2").set(0);
     //}
 
     if (newbit(0x00F, 0x08)) { // Hera Boss
-        trackerData.dungeonbeaten[2] = true;
-        trackerData.items["boss2"] = 2;
+        rootRef.child('dungeonbeaten').child(2).set(true);
+        rootRef.child('items').child("boss2").set(2);
     }
 
 
     //if (newbit_group([[0x1C0, 0x10], [0x1A0, 0x10]])) // Castle Tower
-    //    trackerData.dungeonchests[xx] = 0;
+    //    rootRef.child('dungeonchests').child(xx).set(0);
 
     if (changed(0x1A0) && data[0x1A0] >= 3) // Agahnim Killed
-        trackerData.items['agahnim'] = 1;
+        rootRef.child('items').child("agahnim").set(1);
 
 /*
                   'Palace of Darkness - Shooter Room': (0x012, 0x10),
@@ -296,8 +297,8 @@ function autotrackDoTracking(data) {
                   'Palace of Darkness - Harmless Hellway': (0x034, 0x40),
 */
     if (newbit(0x0B5, 0x08)) { // Palace of Darkness Boss
-        trackerData.dungeonbeaten[3] = true;
-        trackerData.items["boss3"] = 2;
+        rootRef.child('dungeonbeaten').child(3).set(true);
+        rootRef.child('items').child("boss3").set(2);
     }
 
 /*
@@ -312,8 +313,8 @@ function autotrackDoTracking(data) {
                   'Swamp Palace - Waterfall Room': (0x0CC, 0x10),
 */
     if (newbit(0x00D, 0x08)) { // Swamp Palace Boss
-        trackerData.dungeonbeaten[4] = true;
-        trackerData.items["boss4"] = 2;
+        rootRef.child('dungeonbeaten').child(4).set(true);
+        rootRef.child('items').child("boss4").set(2);
     }
 
 /*
@@ -326,8 +327,8 @@ function autotrackDoTracking(data) {
                   'Skull Woods - Bridge Room': (0x0B2, 0x10),
 */
     if (newbit(0x053, 0x08)) { // Skull Woods Boss
-        trackerData.dungeonbeaten[5] = true;
-        trackerData.items["boss5"] = 2;
+        rootRef.child('dungeonbeaten').child(5).set(true);
+        rootRef.child('items').child("boss5").set(2);
     }
 
 /*
@@ -340,8 +341,8 @@ function autotrackDoTracking(data) {
                   'Thieves\' Town - Blind\'s Cell': (0x08A, 0x10),
 */
     if (newbit(0x159, 0x08)) { // Thieves Town Boss
-        trackerData.dungeonbeaten[6] = true;
-        trackerData.items["boss6"] = 2;
+        rootRef.child('dungeonbeaten').child(6).set(true);
+        rootRef.child('items').child("boss6").set(2);
     }
 
 /*
@@ -354,8 +355,8 @@ function autotrackDoTracking(data) {
                   'Ice Palace - Map Chest': (0x07E, 0x10),
 */
     if (newbit(0x1BD, 0x08)) { // Ice Palace Boss
-        trackerData.dungeonbeaten[7] = true;
-        trackerData.items["boss7"] = 2;
+        rootRef.child('dungeonbeaten').child(7).set(true);
+        rootRef.child('items').child("boss7").set(2);
     }
 
 /*
@@ -368,8 +369,8 @@ function autotrackDoTracking(data) {
                   'Misery Mire - Big Key Chest': (0x1A2, 0x10),
 */
     if (newbit(0x121, 0x08)) { // Misery Mire Boss
-        trackerData.dungeonbeaten[8] = true;
-        trackerData.items["boss8"] = 2;
+        rootRef.child('dungeonbeaten').child(8).set(true);
+        rootRef.child('items').child("boss8").set(2);
     }
 
 /*
@@ -386,8 +387,8 @@ function autotrackDoTracking(data) {
                   'Turtle Rock - Eye Bridge - Top Right': (0x1AA, 0x10),
 */
     if (newbit(0x149, 0x08)) { // Turtle Rock Boss
-        trackerData.dungeonbeaten[9] = true;
-        trackerData.items["boss9"] = 2;
+        rootRef.child('dungeonbeaten').child(9).set(true);
+        rootRef.child('items').child("boss9").set(2);
     }
 
 /*
@@ -420,13 +421,13 @@ function autotrackDoTracking(data) {
                   'Ganons Tower - Validation Chest': (0x09A, 0x10)
 */
     if (newbit(0x09A, 0x10)) { // Ganons Tower Boss (but let's use validation chest instead)
-        trackerData.dungeonbeaten[10] = true;
-        trackerData.items["boss10"] = 2;
+        rootRef.child('dungeonbeaten').child(10).set(true);
+        rootRef.child('items').child("boss10").set(2);
     }
 
     function updatesmallkeys(dungeon, offset) {
         if (changed(offset))
-            trackerData.smallkeys[dungeon] = data[offset];
+            rootRef.child('smallkeys').child(dungeon).set(data[offset]);
     };
     //updatesmallkeys(xx, 0x37C); updatesmallkeys(xx, 0x37D); // Escape
     updatesmallkeys(0, 0x37E);
@@ -444,7 +445,7 @@ function autotrackDoTracking(data) {
 
     function updatebigkey(dungeon, offset, mask) {
         if (newbit(offset, mask))
-            trackerData.bigkeys[dungeon] = true;
+            rootRef.child('bigkeys').child(dungeon).set(true);
     };
     updatebigkey(0, 0x367, 0x20);
     updatebigkey(1, 0x367, 0x10);
@@ -458,100 +459,100 @@ function autotrackDoTracking(data) {
     updatebigkey(9, 0x366, 0x08);
     updatebigkey(10, 0x366, 0x04);
 
-    trackerData.items["bomb"] = data[0x343] >= 0 ? 1 : 0;
+    rootRef.child('items').child("bomb").set(data[0x343] >= 0 ? 1 : 0);
 
     if (newbit(0x38E, 0x80))
-        trackerData.items["bow"] = true;
+        rootRef.child('items').child("bow").set(true);
     if (newbit(0x38E, 0x40))
-        trackerData.items["silvers"] = true;
+        rootRef.child('items').child("silvers").set(true);
 
     if (newbit(0x38C, 0xC0)) {
         var bits = data[0x38C] & 0xC0;
-        trackerData.items["boomerang"] = bits == 0x80 ? 1 : (bits == 0x40 ? 2 : 3);
+        rootRef.child('items').child("boomerang").set(bits == 0x80 ? 1 : (bits == 0x40 ? 2 : 3));
     }
 
     if (newbit(0x38C, 0x20))
-        trackerData.items["mushroom"] = true;
+        rootRef.child('items').child("mushroom").set(true);
     if (newbit(0x38C, 0x10))
-        trackerData.items["powder"] = true;
+        rootRef.child('items').child("powder").set(true);
 
     if (newbit(0x38C, 0x04))
-        trackerData.items["shovel"] = true;
+        rootRef.child('items').child("shovel").set(true);
     if (newbit(0x38C, 0x02))
-        trackerData.items["flute"] = true;
+        rootRef.child('items').child("flute").set(true);
 
     if (newbit(0x342, 0x01))
-        trackerData.items["hookshot"] = true;
+        rootRef.child('items').child("hookshot").set(true);
 
     if (newbit(0x345, 0x01))
-        trackerData.items["firerod"] = true;
+        rootRef.child('items').child("firerod").set(true);
 
     if (newbit(0x346, 0x01))
-        trackerData.items["icerod"] = true;
+        rootRef.child('items').child("icerod").set(true);
 
     if (newbit(0x347, 0x01))
-        trackerData.items["bombos"] = true;
+        rootRef.child('items').child("bombos").set(true);
 
     if (newbit(0x348, 0x01))
-        trackerData.items["ether"] = true;
+        rootRef.child('items').child("ether").set(true);
 
     if (newbit(0x349, 0x01))
-        trackerData.items["quake"] = true;
+        rootRef.child('items').child("quake").set(true);
 
     if (newbit(0x34A, 0x01))
-        trackerData.items["lantern"] = true;
+        rootRef.child('items').child("lantern").set(true);
 
     if (newbit(0x34B, 0x01))
-        trackerData.items["hammer"] = true;
+        rootRef.child('items').child("hammer").set(true);
 
     if (newbit(0x34D, 0x01))
-        trackerData.items["net"] = true;
+        rootRef.child('items').child("net").set(true);
 
     if (newbit(0x34E, 0x01))
-        trackerData.items["book"] = true;
+        rootRef.child('items').child("book").set(true);
 
     if (newbit(0x350, 0x01))
-        trackerData.items["somaria"] = true;
+        rootRef.child('items').child("somaria").set(true);
 
     if (newbit(0x351, 0x01))
-        trackerData.items["byrna"] = true;
+        rootRef.child('items').child("byrna").set(true);
 
     if (newbit(0x352, 0x01))
-        trackerData.items["cape"] = true;
+        rootRef.child('items').child("cape").set(true);
 
     if (newbit(0x353, 0x02))
-        trackerData.items["mirror"] = true;
+        rootRef.child('items').child("mirror").set(true);
 
     if (newbit(0x355, 0x01))
-        trackerData.items["boots"] = true;
+        rootRef.child('items').child("boots").set(true);
 
     if (newbit(0x356, 0x01))
-        trackerData.items["flippers"] = true;
+        rootRef.child('items').child("flippers").set(true);
 
     if (newbit(0x357, 0x01))
-        trackerData.items["moonpearl"] = true;
+        rootRef.child('items').child("moonpearl").set(true);
 
     if (changed(0x354))
-        trackerData.items["glove"] = data[0x354];
+        rootRef.child('items').child("glove").set(data[0x354]);
 
     if (changed(0x359))
-        trackerData.items["sword"] = data[0x359];
+        rootRef.child('items').child("sword").set(data[0x359]);
 
     if (changed(0x35A))
-        trackerData.items["shield"] = data[0x35A];
+        rootRef.child('items').child("shield").set(data[0x35A]);
 
     if (changed(0x35B))
-        trackerData.items["tunic"] = data[0x35B] + 1;
+        rootRef.child('items').child("tunic").set(data[0x35B] + 1);
 
     if (changed(0x37B))
-        trackerData.items["mpupgrade"] = data[0x37B];
+        rootRef.child('items').child("mpupgrade").set(data[0x37B]);
 
     var prevbottles = -1;
     if (autotrackPrevData !== null)
         prevbottles = (autotrackPrevData[0x35C] == 0 ? 0 : 1) + (autotrackPrevData[0x35D] == 0 ? 0 : 1) + (autotrackPrevData[0x35E] == 0 ? 0 : 1) + (autotrackPrevData[0x35F] == 0 ? 0 : 1);
     var bottles = (data[0x35C] == 0 ? 0 : 1) + (data[0x35D] == 0 ? 0 : 1) + (data[0x35E] == 0 ? 0 : 1) + (data[0x35F] == 0 ? 0 : 1);
     if (bottles != prevbottles)
-        trackerData.items["bottle"] = bottles;
+        rootRef.child('items').child("bottle").set(bottles);
     
     updateAll();
 }
