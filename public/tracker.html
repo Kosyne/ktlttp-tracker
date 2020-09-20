@@ -13,6 +13,7 @@
         <script src="/script/shared.js?20180201"></script>
         <script src="/script/items.js?20180201"></script>
         <script src="/script/chests.js?20180201"></script>
+        <script src="/script/autotrcker.js"></script>
         <script src="https://unpkg.com/vue/dist/vue.min.js"></script>
     </head>
 
@@ -110,6 +111,12 @@
                     <br><br>
                     <button type="button" name="destroyRoom" id="destroyRoomButton" onclick="destroyFirebase()">Destroy Room</button>
                 </div>
+            </fieldset>
+            <fieldset>
+                <legend>Auto Tracking</legend>
+                <button type="button" name="autoTrack" id="autoTrackButton" onclick="autotrackConnect()">Connect</button>
+                <br>
+                <span id="autoTrackStatus" style="align:left">Disconnected</span>
             </fieldset>
         </fieldset>
 
