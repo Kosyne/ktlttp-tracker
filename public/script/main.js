@@ -586,7 +586,7 @@ function initTracker() {
     window.document.title = roomid + " - " + window.document.title;
 
     rootRef.child('items').on('value', function(snapshot) {
-      trackerData.items = snapshot.val();
+        trackerData.items = snapshot.val();
         updateAll();
         document.getElementById('createRoomPanel').hidden = !!trackerData.items;
     });
@@ -702,16 +702,34 @@ Vue.component('tracker-cell', {
       if(this.itemName === 'blank') {
         return this.trackerOptions.editmode ? 'url(/images/blank.png)' :'none';
       }
-      else if((typeof this.itemValue) === "boolean") {
-        return 'url(/images/' + this.itemName + '.png)';
+      if (this.itemName === "shovelflute") {
+        if (this.trackerData.items["shovel"] && !this.trackerData.items["flute"])
+          return 'url(/images/shovel.png)';
+        if (!this.trackerData.items["shovel"] && this.trackerData.items["flute"])
+          return 'url(/images/flute.png)';
+        return 'url(/images/shovelflute.png)';
       }
-      else if(this.textCounter !== null) {
-        return 'url(/images/' + this.itemName + '.png)';
+      if (this.itemName === "mushroompowder") {
+        if (this.trackerData.items["mushroom"] && !this.trackerData.items["powder"])
+          return 'url(/images/mushroom.png)';
+        if (!this.trackerData.items["mushroom"] && this.trackerData.items["powder"])
+          return 'url(/images/powder.png)';
+        return 'url(/images/mushroompowder.png)';
       }
+      if((typeof this.itemValue) === "boolean")
+        return 'url(/images/' + this.itemName + '.png)';
+      if(this.textCounter !== null)
+        return 'url(/images/' + this.itemName + '.png)';
       return 'url(/images/' + this.itemName + (this.trackerOptions.editmode ? itemsMax[this.itemName] : (this.itemValue || '0')) + '.png)';
     },
     isActive: function() {
-      return this.trackerOptions.editmode || this.itemValue;
+      if (this.trackerOptions.editmode)
+        return true;
+      if (this.itemName === "shovelflute")
+        return this.trackerData.items["shovel"] || this.trackerData.items["flute"];
+      if (this.itemName === "mushroompowder")
+        return this.trackerData.items["mushroom"] || this.trackerData.items["powder"];
+      return this.itemValue;
     },
     chestImage: function() {
       if(this.bossNum && this.trackerOptions && this.trackerOptions.showchests) {
@@ -759,6 +777,20 @@ Vue.component('tracker-cell', {
         return;
       }
       // Non-edit mode clicks
+      if (this.itemName === "shovelflute") {
+        var cur = (this.trackerData.items["shovel"] ? 1 : 0) | (this.trackerData.items["flute"] ? 2 : 0);
+        var target = (cur + amt + 4) % 4;
+        rootRef.child("items").child("shovel").set((target & 1) !== 0);
+        rootRef.child("items").child("flute").set((target & 2) !== 0);
+        return;
+      }
+      if (this.itemName === "mushroompowder") {
+        var cur = (this.trackerData.items["mushroom"] ? 1 : 0) | (this.trackerData.items["powder"] ? 2 : 0);
+        var target = (cur + amt + 4) % 4;
+        rootRef.child("items").child("mushroom").set((target & 1) !== 0);
+        rootRef.child("items").child("powder").set((target & 2) !== 0);
+        return;
+      }
       if(this.bossNum) {
         // Do both this and the below for bosses
         rootRef.child('dungeonbeaten').child(this.bossNum).set(!this.trackerData.dungeonbeaten[this.bossNum])

@@ -84,6 +84,8 @@ var itemsInit = {
     net: false,
     silvers: false,
     mpupgrade: 0,
+    shovelflute: false,
+    mushroompowder: false,
     bomb: 0,
     heartcontainer: 0,
     heartpiece: 0,
