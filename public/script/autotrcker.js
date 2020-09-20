@@ -471,6 +471,8 @@ function autotrackDoTracking(data) {
         rootRef.child('items').child("boomerang").set(bits == 0x80 ? 1 : (bits == 0x40 ? 2 : 3));
     }
 
+    if (disabledbit(0x38C, 0x20))
+        rootRef.child('items').child("mushroom").set(false);
     if (newbit(0x38C, 0x20))
         rootRef.child('items').child("mushroom").set(true);
     if (newbit(0x38C, 0x10))
