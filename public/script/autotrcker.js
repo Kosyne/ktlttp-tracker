@@ -278,7 +278,7 @@ function autotrackDoTracking(data) {
     //if (newbit_group([[0x1C0, 0x10], [0x1A0, 0x10]])) // Castle Tower
     //    rootRef.child('dungeonchests').child(xx).set(0);
 
-    if (changed(0x1A0) && data[0x1A0] >= 3) // Agahnim Killed
+    if (changed(0x3C5) && data[0x3C5] >= 3) // Agahnim Killed
         rootRef.child('items').child("agahnim").set(1);
 
 /*
