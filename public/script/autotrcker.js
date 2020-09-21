@@ -3,10 +3,12 @@ var autotrackSocket = null;
 var autotrackDeviceName = "";
 
 var autotrackReconnectTimer = null;
-var autotrackState = "disconnected";
 var autotrackTimer = null;
 
 var autotrackPrevData = null;
+
+var autotrackRefreshInterval = 1000;
+var autotrackTimeoutDelay = 10000;
 
 var WRAM_START = 0xF50000;
 var WRAM_SIZE = 0x20000;
@@ -14,7 +16,7 @@ var SAVEDATA_START = WRAM_START + 0xF000;
 var SAVEDATA_SIZE = 0x500;
 
 function autotrackStartTimer() {
-    autotrackTimer = setTimeout(autotrackReadMem, 1000);
+    autotrackTimer = setTimeout(autotrackReadMem, autotrackRefreshInterval);
 }
 
 function autotrackSetStatus(text) {
@@ -22,7 +24,7 @@ function autotrackSetStatus(text) {
 }
 
 function autotrackConnect(host="ws://localhost:8080") {
-    if (autotrackSocket !== null) {
+    if (autotrackSocket !== null || autotrackReconnectTimer !== null) {
         autotrackDisconnect();
         return;
     }
@@ -45,14 +47,12 @@ function autotrackConnect(host="ws://localhost:8080") {
     
     autotrackSetStatus("Connecting");
     document.getElementById("autoTrackButton").textContent="Disconnect";
-    autotrackState = "connecting";
 
     autotrackReconnectTimer = setTimeout(function () {
-        if (autotrackState !== "connected") {
-            autotrackCleanup();
-            autotrackConnect(autotrackHost);
-        }
-    }, 10000);
+        autotrackReconnectTimer = null;
+        autotrackCleanup();
+        autotrackConnect(autotrackHost);
+    }, autotrackTimeoutDelay);
 }
 
 function autotrackDisconnect() {
@@ -61,6 +61,7 @@ function autotrackDisconnect() {
         autotrackReconnectTimer = null;
     }
     autotrackCleanup();
+    document.getElementById("autoTrackButton").textContent="Connect";
 }
 
 function autotrackCleanup() {
@@ -79,8 +80,6 @@ function autotrackCleanup() {
 
     autotrackPrevData = null;
     autotrackSetStatus("Disonnected");
-    document.getElementById("autoTrackButton").textContent="Connect";
-    autotrackState = "disconnected";
 }
 
 function autotrackOnConnect(event) {
@@ -108,7 +107,6 @@ function autotrackOnDeviceList(event) {
         Operands : [autotrackDeviceName]
     }));
     autotrackSetStatus("Connected to " + autotrackDeviceName);
-    autotrackState = "connected";
 
     autotrackStartTimer();
 }
@@ -123,10 +121,13 @@ function autotrackReadMem() {
         autotrackSocket.onmessage = callback;
     };
 
-    var timeout = setTimeout(function () {
+    if (autotrackReconnectTimer !== null)
+        clearTimeout(autotrackReconnectTimer);
+    autotrackReconnectTimer = setTimeout(function () {
+        autotrackReconnectTimer = null;
         autotrackCleanup();
         autotrackConnect(autotrackHost);
-    }, 10000);
+    }, autotrackTimeoutDelay);
     
     snesread(WRAM_START + 0x10, 1, function (event) {
         var gamemode = new Uint8Array(event.data)[0];
@@ -136,7 +137,6 @@ function autotrackReadMem() {
         }
         snesread(SAVEDATA_START, 0x280, function (event2) {
             snesread(SAVEDATA_START + 0x280, 0x280, function (event3) {
-                clearTimeout(timeout);
                 var data = new Uint8Array([...new Uint8Array(event2.data), ...new Uint8Array(event3.data)]);
                 autotrackDoTracking(data);
                 autotrackPrevData = data;
