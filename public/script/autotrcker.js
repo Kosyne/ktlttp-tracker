@@ -420,7 +420,7 @@ function autotrackDoTracking(data) {
                   'Ganons Tower - Pre-Moldorm Chest': (0x07A, 0x40),
                   'Ganons Tower - Validation Chest': (0x09A, 0x10)
 */
-    if (newbit(0x09A, 0x10)) { // Ganons Tower Boss (but let's use validation chest instead)
+    if (newbit(0x01B, 0x08)) { // Ganons Tower Boss
         rootRef.child('dungeonbeaten').child(10).set(true);
         rootRef.child('items').child("boss10").set(2);
     }
@@ -459,7 +459,7 @@ function autotrackDoTracking(data) {
     updatebigkey(9, 0x366, 0x08);
     updatebigkey(10, 0x366, 0x04);
 
-    rootRef.child('items').child("bomb").set(data[0x343] >= 0 ? 1 : 0);
+    rootRef.child('items').child("bomb").set(data[0x343] > 0 ? 1 : 0);
 
     if (newbit(0x38E, 0x80))
         rootRef.child('items').child("bow").set(true);
