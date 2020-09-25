@@ -89,15 +89,19 @@ function glitchedLinkInDarkWorld() {
     return trackerData.items.moonpearl || trackerData.items.bottle >= 1;
 }
 
+function hasBeatenAgahnim1() {
+    return trackerData.items.agahnim == 2;
+}
+
 function canGoBeatAgahnim1(allowOutOfLogicGlitches, logic = 'glitchless') {
     if (logic === 'inverted') {
-        return !trackerData.items.agahnim
+        return !hasBeatenAgahnim1()
             && (trackerData.items.lantern || allowOutOfLogicGlitches)
             && trackerData.items.sword >= 1
             && canEnterDarkWorldDeathMountain('inverted', allowOutOfLogicGlitches);
     }
     else {
-        return !trackerData.items.agahnim
+        return !hasBeatenAgahnim1()
             && (trackerData.items.lantern || allowOutOfLogicGlitches)
             && (trackerData.items.cape || trackerData.items.sword >= 2)
             && trackerData.items.sword >= 1;
@@ -106,14 +110,14 @@ function canGoBeatAgahnim1(allowOutOfLogicGlitches, logic = 'glitchless') {
 
 function canEnterLightWorld(logic, agahnimCheck, allowOutOfLogicGlitches) {
     return logic !== 'inverted'
-            || (trackerData.items.agahnim
+            || (hasBeatenAgahnim1()
                 || (agahnimCheck && canGoBeatAgahnim1(allowOutOfLogicGlitches, 'inverted'))
                 || ((canLiftDarkRocks() || (trackerData.items.hammer && canLiftRocks())) && trackerData.items.moonpearl));
 }
 
 function canEnterNorthEastDarkWorld(logic, agahnimCheck, allowOutOfLogicGlitches) {
     if (logic === 'majorGlitches') {
-        return trackerData.items.agahnim
+        return hasBeatenAgahnim1()
                 || (agahnimCheck && canGoBeatAgahnim1(allowOutOfLogicGlitches))
                 || (trackerData.items.moonpearl
                         && ((canLiftDarkRocks() && (trackerData.items.boots || trackerData.items.flippers))
@@ -124,7 +128,7 @@ function canEnterNorthEastDarkWorld(logic, agahnimCheck, allowOutOfLogicGlitches
                                 || (trackerData.items.moonpearl && (trackerData.items.mirror || trackerData.items.boots))));
     }
     else if (logic === 'owGlitches') {
-        return trackerData.items.agahnim
+        return hasBeatenAgahnim1()
                 || (agahnimCheck && canGoBeatAgahnim1(allowOutOfLogicGlitches))
                 || (trackerData.items.moonpearl
                         && ((canLiftDarkRocks() && (trackerData.items.boots || trackerData.items.flippers))
@@ -134,7 +138,7 @@ function canEnterNorthEastDarkWorld(logic, agahnimCheck, allowOutOfLogicGlitches
                                 || (trackerData.items.moonpearl && (trackerData.items.mirror || trackerData.items.boots))));
     }
     else if (logic === 'glitchless') {
-        return trackerData.items.agahnim
+        return hasBeatenAgahnim1()
                 || (agahnimCheck && canGoBeatAgahnim1(allowOutOfLogicGlitches))
                 || (trackerData.items.hammer && canLiftRocks() && trackerData.items.moonpearl)
                 || (canLiftDarkRocks() && trackerData.items.flippers && trackerData.items.moonpearl);
@@ -152,7 +156,7 @@ function canEnterNorthWestDarkWorld(logic, agahnimCheck, allowOutOfLogicGlitches
                 || (trackerData.items.moonpearl
                         && (canLiftDarkRocks()
                                 || (trackerData.items.hammer && canLiftRocks())
-                                || ((trackerData.items.agahnim || (agahnimCheck && canGoBeatAgahnim1(allowOutOfLogicGlitches)))
+                                || ((hasBeatenAgahnim1() || (agahnimCheck && canGoBeatAgahnim1(allowOutOfLogicGlitches)))
                                         && trackerData.items.hookshot
                                         && (trackerData.items.hammer || canLiftRocks() || trackerData.items.flippers))));
     }
@@ -161,7 +165,7 @@ function canEnterNorthWestDarkWorld(logic, agahnimCheck, allowOutOfLogicGlitches
                 || (trackerData.items.moonpearl
                         && (canLiftDarkRocks()
                                 || (trackerData.items.hammer && canLiftRocks())
-                                || ((trackerData.items.agahnim || (agahnimCheck && canGoBeatAgahnim1(allowOutOfLogicGlitches)))
+                                || ((hasBeatenAgahnim1() || (agahnimCheck && canGoBeatAgahnim1(allowOutOfLogicGlitches)))
                                         && trackerData.items.hookshot
                                         && (trackerData.items.hammer || canLiftRocks() || trackerData.items.flippers))));
     }
@@ -182,7 +186,7 @@ function canEnterSouthDarkWorld(logic, agahnimCheck, allowOutOfLogicGlitches) {
                 || (trackerData.items.moonpearl
                         && (canLiftDarkRocks()
                                 || (trackerData.items.hammer && canLiftRocks())
-                                || ((trackerData.items.agahnim || (agahnimCheck && canGoBeatAgahnim1(allowOutOfLogicGlitches)))
+                                || ((hasBeatenAgahnim1() || (agahnimCheck && canGoBeatAgahnim1(allowOutOfLogicGlitches)))
                                         && (trackerData.items.hammer || (trackerData.items.hookshot && (trackerData.items.flippers || canLiftRocks()))))));
     }
     else if (logic === 'owGlitches') {
@@ -190,7 +194,7 @@ function canEnterSouthDarkWorld(logic, agahnimCheck, allowOutOfLogicGlitches) {
                 || (trackerData.items.moonpearl
                         && (canLiftDarkRocks()
                                 || (trackerData.items.hammer && canLiftRocks())
-                                || ((trackerData.items.agahnim || (agahnimCheck && canGoBeatAgahnim1(allowOutOfLogicGlitches)))
+                                || ((hasBeatenAgahnim1() || (agahnimCheck && canGoBeatAgahnim1(allowOutOfLogicGlitches)))
                                         && (trackerData.items.hammer || (trackerData.items.hookshot && (trackerData.items.flippers || canLiftRocks()))))));
     }
     else if (logic === 'glitchless') {
@@ -4242,7 +4246,7 @@ chests[37] = {
         const availability = new Availability();
         availability.glitchless = 'possible';
         if (trackerData.items.boots) {
-            if (trackerData.items.agahnim) {
+            if (hasBeatenAgahnim1()) {
                 availability.glitchless = 'available';
             }
             else if (canGoBeatAgahnim1(false)) {
@@ -4255,7 +4259,7 @@ chests[37] = {
         if (canEnterLightWorld('inverted', false, false)) {
             availability.inverted = 'possible';
             if (trackerData.items.boots && trackerData.items.moonpearl) {
-                if (trackerData.items.agahnim) {
+                if (hasBeatenAgahnim1()) {
                     availability.inverted = 'available';
                 }
                 else if (canGoBeatAgahnim1(false, 'inverted')) {
@@ -5351,7 +5355,7 @@ chests[61] = {
         }
         if (crystalCount === 2 && trackerData.items.moonpearl) {
             if (canEnterSouthDarkWorld('glitchless', false, false)
-                    && (trackerData.items.hammer || (trackerData.items.mirror && trackerData.items.agahnim))) {
+                    && (trackerData.items.hammer || (trackerData.items.mirror && hasBeatenAgahnim1()))) {
                 availability.glitchless = 'available';
             }
             else if (canEnterSouthDarkWorld('glitchless', true, false)
@@ -5368,7 +5372,7 @@ chests[61] = {
         }
         else if (crystalCount === 2) {
             if (canEnterSouthDarkWorld('owGlitches', false, false)
-                    && ((trackerData.items.hammer && trackerData.items.moonpearl) || (trackerData.items.mirror && trackerData.items.agahnim))) {
+                    && ((trackerData.items.hammer && trackerData.items.moonpearl) || (trackerData.items.mirror && hasBeatenAgahnim1()))) {
                 availability.owGlitches = 'available'
             }
             else if (canEnterSouthDarkWorld('owGlitches', true, false)
@@ -5380,7 +5384,7 @@ chests[61] = {
                 availability.owGlitches = 'glitchagahnim';
             }
             if (canEnterSouthDarkWorld('majorGlitches', false, false)
-                    && ((trackerData.items.hammer && glitchedLinkInDarkWorld()) || (trackerData.items.mirror && trackerData.items.agahnim))) {
+                    && ((trackerData.items.hammer && glitchedLinkInDarkWorld()) || (trackerData.items.mirror && hasBeatenAgahnim1()))) {
                 availability.majorGlitches = 'available'
             }
             else if (canEnterSouthDarkWorld('majorGlitches', true, false)

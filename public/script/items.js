@@ -101,7 +101,7 @@ var itemsInit = {
     boss8: 1,
     boss9: 1,
     boss10: 1,
-    agahnim: 0,
+    agahnim: 1,
 
     blank: false
 };
@@ -121,7 +121,7 @@ var dungeonchestsInit = {
 };
 
 var bigkeyInit = [false, false, false, false, false, false, false, false, false, false, false];
-var smallkeyInit = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+var smallkeyInit = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
 var dungeonbeatenInit = [false, false, false, false, false, false, false, false, false, false, false];
 var prizesInit = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
@@ -145,7 +145,7 @@ var itemsMin = {
 	boss1: 1,
 	boss2: 1,
 
-    agahnim:0,
+    agahnim:1,
 
 	boss3: 1,
 	boss4: 1,
@@ -174,7 +174,7 @@ var itemsMax = {
 	boss1: 2,
 	boss2: 2,
 
-    agahnim: 1,
+    agahnim: 2,
 
 	boss3: 2,
 	boss4: 2,
@@ -207,5 +207,6 @@ var itemsMax = {
     key7: 2,
     key8: 3,
     key9: 4,
-    key10: 4
+    key10: 4,
+    key11: 2
 };

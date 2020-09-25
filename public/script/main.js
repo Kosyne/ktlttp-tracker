@@ -748,9 +748,10 @@ Vue.component('tracker-cell', {
       return null;
     },
     smallKeyImage: function() {
-      if(this.bossNum && this.trackerOptions && this.trackerOptions.showsmallkeys && this.trackerData.smallkeys) {
-        if(this.trackerData.smallkeys[this.bossNum] > 0) {
-          return "url(/images/smallkey" + this.trackerData.smallkeys[this.bossNum] + ".png)";
+      var bossnum = this.itemName === "agahnim" ? 11 : this.bossNum;
+      if(bossnum && this.trackerOptions && this.trackerOptions.showsmallkeys && this.trackerData.smallkeys) {
+        if(this.trackerData.smallkeys[bossnum] > 0) {
+          return "url(/images/smallkey" + this.trackerData.smallkeys[bossnum] + ".png)";
         } else {
           return "url(/images/nothing.png)";
         }
@@ -840,10 +841,11 @@ Vue.component('tracker-cell', {
       rootRef.child('bigkeys').child(this.bossNum).set(!this.trackerData.bigkeys[this.bossNum]);
     },
     clickSmallKey: function(amt) {
-      var keyitem = 'key' + this.bossNum;
+      var bossnum = this.itemName === "agahnim" ? 11 : this.bossNum;
+      var keyitem = 'key' + bossnum;
       var modamt = itemsMax[keyitem] + 1;
-      var newVal = (this.trackerData.smallkeys[this.bossNum] + amt + modamt) % modamt;
-      rootRef.child('smallkeys').child(this.bossNum).set(newVal);
+      var newVal = (this.trackerData.smallkeys[bossnum] + amt + modamt) % modamt;
+      rootRef.child('smallkeys').child(bossnum).set(newVal);
     },
     clickSmallKeyForward: function(e) {
       this.clickSmallKey(1);

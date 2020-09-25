@@ -260,7 +260,7 @@ function autotrackDoTracking(data) {
     update_boss(10, 0x01B); // Ganons Tower
 
     if (changed(0x3C5) && data[0x3C5] >= 3) // Agahnim Killed
-        rootRef.child('items').child("agahnim").set(1);
+        rootRef.child('items').child("agahnim").set(2);
 
     function updatesmallkeys(dungeon, offset) {
         if (changed(offset)) {
@@ -274,7 +274,6 @@ function autotrackDoTracking(data) {
     updatesmallkeys(0, 0x37E);
     updatesmallkeys(1, 0x37F);
     updatesmallkeys(2, 0x386);
-    //updatesmallkeys(xx, 0x380); // Castle Tower
     updatesmallkeys(3, 0x382);
     updatesmallkeys(4, 0x381);
     updatesmallkeys(5, 0x384);
@@ -283,6 +282,7 @@ function autotrackDoTracking(data) {
     updatesmallkeys(8, 0x383);
     updatesmallkeys(9, 0x388);
     updatesmallkeys(10, 0x389); // GT
+    updatesmallkeys(11, 0x380); // Castle Tower
 
     function updatebigkey(dungeon, offset, mask) {
         if (newbit(offset, mask))
