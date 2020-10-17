@@ -321,7 +321,7 @@ function autotrackDoTracking(data) {
 
     if (newbit(0x38C, 0x04))
         rootRef.child('items').child("shovel").set(true);
-    if (newbit(0x38C, 0x02))
+    if (newbit(0x38C, 0x03))
         rootRef.child('items').child("flute").set(true);
 
     if (newbit(0x342, 0x01))
