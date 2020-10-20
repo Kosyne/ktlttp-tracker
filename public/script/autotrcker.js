@@ -231,10 +231,10 @@ function autotrackDoTracking(data) {
     updatechest(52, 0x2E8, 0x40); // Dig Game
     updatechest(53, 0x301, 0x40); // Zora's Ledge
     updatechest(54, 0x2AA, 0x40); // Dig/Flute Spot
-    updatechest_group(55, [[0x022, 0x10], [0x022, 0x20], [0x022, 0x40]]); // Sewers Left + Middle + Right
+    //updatechest_group(55, [[0x022, 0x10], [0x022, 0x20], [0x022, 0x40]]); // Sewers Left + Middle + Right
     updatechest_group(56, [[0x3C6, 0x01], [0x0AA, 0x10]]); // Uncle + Passage
-    updatechest_group(57, [[0x0E4, 0x10], [0x0E2, 0x10], [0x100, 0x10], [0x064, 0x10]]); // Hyrule Castle Map + Boomerang + Zelda + Dark Cross
-    updatechest(58, 0x024, 0x10); // Sanctuary
+    //updatechest_group(57, [[0x0E4, 0x10], [0x0E2, 0x10], [0x100, 0x10], [0x064, 0x10]]); // Hyrule Castle Map + Boomerang + Zelda + Dark Cross
+    //updatechest(58, 0x024, 0x10); // Sanctuary
     updatechest(59, 0x411, 0x80); // Magic Bat
     updatechest(60, 0x411, 0x04); // Blacksmith
     updatechest_group(61, [[0x22C, 0x10], [0x22C, 0x20]]); // Fat Fairy Left + Right
