@@ -379,7 +379,7 @@ function autotrackDoTracking(data) {
         rootRef.child('items').child("glove").set(data[0x354]);
 
     if (changed(0x359))
-        rootRef.child('items').child("sword").set(data[0x359]);
+        rootRef.child('items').child("sword").set((data[0x359] == 0xFF) ? 0 : data[0x359]);
 
     if (changed(0x35A))
         rootRef.child('items').child("shield").set(data[0x35A]);
