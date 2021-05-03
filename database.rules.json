@@ -22,35 +22,35 @@
           }
         },
         "items": {
-          ".read": "true",
+          ".read": "data.parent().child('editors').child(auth.uid).exists()",
           ".write": "data.parent().child('editors').child(auth.uid).exists()"
         },
         "dungeonchests": {
-          ".read": "true",
+          ".read": "data.parent().child('editors').child(auth.uid).exists()",
           ".write": "data.parent().child('editors').child(auth.uid).exists()"
         },
         "bigkeys": {
-          ".read": "true",
+          ".read": "data.parent().child('editors').child(auth.uid).exists()",
           ".write": "data.parent().child('editors').child(auth.uid).exists()"
         },
         "smallkeys": {
-          ".read": "true",
+          ".read": "data.parent().child('editors').child(auth.uid).exists()",
           ".write": "data.parent().child('editors').child(auth.uid).exists()"
         },
         "dungeonbeaten": {
-          ".read": "true",
+          ".read": "data.parent().child('editors').child(auth.uid).exists()",
           ".write": "data.parent().child('editors').child(auth.uid).exists()"
         },
         "prizes": {
-          ".read": "true",
+          ".read": "data.parent().child('editors').child(auth.uid).exists()",
           ".write": "data.parent().child('editors').child(auth.uid).exists()"
         },
         "medallions": {
-          ".read": "true",
+          ".read": "data.parent().child('editors').child(auth.uid).exists()",
           ".write": "data.parent().child('editors').child(auth.uid).exists()"
         },
         "chestsopened": {
-          ".read": "true",
+          ".read": "data.parent().child('editors').child(auth.uid).exists()",
           ".write": "data.parent().child('editors').child(auth.uid).exists()"
         },
         "timer": {
