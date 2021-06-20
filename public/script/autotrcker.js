@@ -264,25 +264,23 @@ function autotrackDoTracking(data) {
 
     function updatesmallkeys(dungeon, offset) {
         if (changed(offset)) {
-            var newkeys = autotrackPrevData === null ? data[offset] : (data[offset] - autotrackPrevData[offset] + trackerData.smallkeys[dungeon]);
-            if (newkeys > trackerData.smallkeys[dungeon]) {
-                rootRef.child('smallkeys').child(dungeon).set(newkeys);
-            }
+            rootRef.child('smallkeys').child(dungeon).set(data[offset]);
         }
     };
-    //updatesmallkeys(xx, 0x37C); updatesmallkeys(xx, 0x37D); // Escape
-    updatesmallkeys(0, 0x37E);
-    updatesmallkeys(1, 0x37F);
-    updatesmallkeys(2, 0x386);
-    updatesmallkeys(3, 0x382);
-    updatesmallkeys(4, 0x381);
-    updatesmallkeys(5, 0x384);
-    updatesmallkeys(6, 0x387);
-    updatesmallkeys(7, 0x385);
-    updatesmallkeys(8, 0x383);
-    updatesmallkeys(9, 0x388);
-    updatesmallkeys(10, 0x389); // GT
-    updatesmallkeys(11, 0x380); // Castle Tower
+    //updatesmallkeys(xx, 0x4E0); // Hyrule Castle (sent to Sewers instead)
+    //updatesmallkeys(xx, 0x4E1); // Sewers
+    updatesmallkeys(0, 0x4E2);
+    updatesmallkeys(1, 0x4E3);
+    updatesmallkeys(2, 0x4EA);
+    updatesmallkeys(3, 0x4E6);
+    updatesmallkeys(4, 0x4E5);
+    updatesmallkeys(5, 0x4E8);
+    updatesmallkeys(6, 0x4EB);
+    updatesmallkeys(7, 0x4E9);
+    updatesmallkeys(8, 0x4E7);
+    updatesmallkeys(9, 0x4EC);
+    updatesmallkeys(10, 0x4ED); // GT
+    updatesmallkeys(11, 0x4E4); // Castle Tower
 
     function updatebigkey(dungeon, offset, mask) {
         if (newbit(offset, mask))
